@@ -1,0 +1,11 @@
+#!/bin/sh
+
+branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)
+
+if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
+    printf '%s\n' "Direct commits to $branch are blocked." >&2
+    printf '%s\n' "Create a feature branch, then open a reviewed pull request." >&2
+    exit 1
+fi
+
+git diff --cached --check
