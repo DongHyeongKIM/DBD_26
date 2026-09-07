@@ -1,0 +1,12 @@
+{
+  "dataset": "/Users/dh/Documents/DBD_26/Dataset",
+  "active_mode_map": {
+    "PB": 3,
+    "PC": 2
+  },
+  "active_mode_override": null,
+  "settle_seconds": 3.0,
+  "discovered_flights": 70,
+  "analysed_flights": 70,
+  "missing_or_failed_flights": 0
+}
