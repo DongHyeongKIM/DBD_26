@@ -28,6 +28,18 @@ python src/drone_flight_analysis.py \
   --result result
 ```
 
+충전 로그 분석:
+
+```bash
+./run_charge_analysis.sh
+```
+
+충전기 종료 전류 기준을 바꾸려면 다음처럼 지정합니다. 기본값은 1 A입니다.
+
+```bash
+./run_charge_analysis.sh --taper-current 0.5
+```
+
 팩별 기본 분석 구간은 PB `mode == 3`, PC `mode == 2`이며, 진입 직후 3초는 안정화 구간으로
 제외합니다. 모든 팩을 하나의 모드로 강제하려면 `--active-mode`, 팩별 모드는 `--mode-map`,
 안정화 시간은 `--settle-seconds`로 변경할 수 있습니다. 시료별 추종오차 원시
@@ -41,6 +53,19 @@ result/
 ├── all_flight_summaries.csv       # 분석 가능한 모든 비행의 1행 요약
 ├── data_quality_report.csv        # 누락/빈 파일/분석 실패 목록
 ├── analysis_metadata.json         # 실행 조건과 처리 개수
+├── charging/
+│   ├── all_charge_summaries.csv   # 충전 회차별 지표
+│   ├── charge_data_quality_report.csv
+│   ├── charge_analysis_metadata.json
+│   ├── rpt_charge_summary.csv     # RPT별 평균·표준편차·회차별 기울기
+│   ├── sessions/PB/RPT_n/CH_n/
+│   │   ├── charge_summary.csv
+│   │   └── charge_profile.png
+│   └── rpt/PB/RPT_n/
+│       ├── charge_trends.csv
+│       ├── charge_trends.png
+│       ├── normalized_charge_profiles.png
+│       └── rpt_charge_summary.csv
 ├── flights/PB/RPT_n/V_n/
 │   ├── flight_summary.csv
 │   ├── performance_overview.png
@@ -77,3 +102,10 @@ PWM 부하와 모터 편차, 전압·전류·전력·방전에너지·온도·�
 추종오차가 아닌 축별 평균·표준편차·RMS·최댓값으로 별도 기록합니다. 위치·속도·가속도
 그래프는 X/Y를 Horizontal, Z를 Vertical로 구분하고, 자세·각속도는 Roll/Pitch/Yaw로
 표시합니다.
+
+충전 로그 분석은 충전 시간, 시작·종료 전압, 충전 용량과 에너지, 평균·최대 전류 및 전력,
+온도 상승, 셀 불균형, 용량 80/90/95% 도달 시간과 추정 CV 구간을 계산합니다. CV 시작은
+유효 셀의 평균 전압이 처음 4.18 V에 도달한 시점으로 정의합니다. 각 충전 프로파일과
+CH_1~CH_9 변화, RPT별 비교 그래프가 `result/charging` 아래에 생성됩니다. 충전기 CSV의
+`Capacity`는 mAh, `Energy`는 Wh, `Balance`는 mV로 해석하며 이 가정과 실행 조건은
+`charge_analysis_metadata.json`에 기록됩니다.

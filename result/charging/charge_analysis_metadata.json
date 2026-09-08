@@ -1,0 +1,10 @@
+{
+  "dataset": "/Users/dh/Documents/DBD_26/Dataset",
+  "taper_current_threshold_A": 1.0,
+  "discovered_charge_logs": 36,
+  "analysed_charge_logs": 36,
+  "missing_or_failed_charge_logs": 0,
+  "cv_start_definition": "first sample with mean active-cell voltage >= 4.18 V",
+  "capacity_unit_assumption": "charger Capacity column is mAh",
+  "energy_unit_assumption": "charger Energy column is Wh"
+}
